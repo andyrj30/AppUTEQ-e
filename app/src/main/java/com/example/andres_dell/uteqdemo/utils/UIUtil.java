@@ -20,6 +20,10 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by varsovski on 28-Sep-15.
  */
@@ -107,5 +111,24 @@ public class UIUtil {
         }
         catch (Exception ex){}
         return r;
+    }
+    public static String longevidad(String publicacion) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha =  format.parse(publicacion);
+        String longevidad="Publicado hace ";
+        java.util.Date fechaActual = new Date();
+        long diferenciaEn_ms = fechaActual.getTime() - fecha.getTime();
+        long dias = diferenciaEn_ms / (1000 * 60 * 60 * 24);
+        if(dias<=30)
+            longevidad+="días";
+        else if(dias<=45)
+            longevidad+="más de un mes";
+        else if(dias<= 360)
+            longevidad+="meses";
+        else if(dias<= 540)
+            longevidad+="más de un año";
+        else if(dias> 540)
+            longevidad+="años";
+        return longevidad;
     }
 }

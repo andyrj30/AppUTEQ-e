@@ -9,6 +9,7 @@ import com.example.andres_dell.uteqdemo.utils.WebServ.HttpRequest.HttpRequestExc
 
 import org.json.JSONException;
 
+import java.text.ParseException;
 import java.util.Map;
 
 public class WebService extends AsyncTask<String, Long, String> {
@@ -91,6 +92,8 @@ public class WebService extends AsyncTask<String, Long, String> {
         try {
             callback.processFinish(this.xml);
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 

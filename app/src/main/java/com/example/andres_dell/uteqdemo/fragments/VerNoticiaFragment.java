@@ -27,6 +27,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,7 +77,7 @@ public class VerNoticiaFragment extends Fragment implements Asynchtask {
     }
 
     @Override
-    public void processFinish(String result) throws JSONException {
+    public void processFinish(String result) throws JSONException, ParseException {
 
         JSONArray objdataarray = new JSONArray(result);
 
@@ -88,7 +90,7 @@ public class VerNoticiaFragment extends Fragment implements Asynchtask {
         JSONObject jsonObj = objdataarray.getJSONObject(0);
         //Extrayendo datos del JSON e insertando en cada campo
         txtCategoria.setText("Noticia " + jsonObj.getString("categoria"));
-        txtFecha.setText(jsonObj.getString("publicacion").substring(0, 10).concat(" | ").concat(TiempoPasado(jsonObj.getString("publicacion").substring(0, 10))));
+        txtFecha.setText(jsonObj.getString("publicacion").substring(0, 10).concat(" | ").concat(UIUtil.longevidad(jsonObj.getString("publicacion").substring(0, 10))));
         txtTitulo.setText(Html.fromHtml(jsonObj.getString("titulo")));
         txtIntro.setText(Html.fromHtml(jsonObj.getString("intro")));
         txtContenido.setText(Html.fromHtml(jsonObj.getString("texto")));
@@ -114,10 +116,6 @@ public class VerNoticiaFragment extends Fragment implements Asynchtask {
                 fragment.show(getFragmentManager(), DialogoFragment.TAG);
             }
         });
-    }
-
-    public String TiempoPasado(String fecha){
-        return "Publicado hace mucho tiempo";
     }
 
     @Override
